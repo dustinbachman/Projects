@@ -1,10 +1,11 @@
+import config # Used to store keys
 import spotipy # Used to access the Spotify API
 from spotipy.oauth2 import SpotifyOAuth # Used for Spotify user authentication
 
 # Global Variables
 scope = 'playlist-read-private playlist-modify-public'
-cid = '39f5821dd2054aab8569027dca377677'
-secret = '2677007bd3e0456a98b45d7a98457d17'
+cid = config.clientID
+secret = config.secretKey
 redirect_uri = 'http://localhost:8000'
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cid, client_secret=secret, redirect_uri=redirect_uri, scope=scope))
 allPlaylists = []
@@ -48,13 +49,9 @@ def getUserPlaylists():
 def createPlaylist(n):
     sp.user_playlist_create(username, n)
     
-
-
-
-
-
+getUserPlaylists()
 # Print the name and track count of each user-created playlist
-#print(len(userPlaylists))
+print(len(userPlaylists))
 #for playlist in userPlaylists:
     #print(getPlaylistTracks(playlist[playlist['id']]))
 
