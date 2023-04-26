@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <script>
+            // Set up variables
+            const date = new Date();
+            var maxYear = date.getFullYear();
+            var minYear = 1958;
+            var year;
+            var musicLink;
+            usedYears = [];
+            songs = [];
+            artists = [];
+            ytLinks = [];
+            var numOfSongs = 5;
+            var userCorrect = new Boolean(false);
+
+            // Clear the used years array
+            function clearUsedYears() {
+                usedYears = [];
+            } // clearUsedYears()
+
+            function getYear() {
+                var y = Math.floor(Math.random() * (maxYear - minYear - 1)) + minYear;
+                while(usedYears.includes(y)){
+                    y = Math.floor(Math.random() * (maxYear - minYear - 1)) + minYear;
+                }
+                usedYears.push(y);
+                year = y;
+            } // getYear()
+
+            function scrapeData() {
+                var musicLink = 'http://billboardtop100of.com/' + year + '-2/';
+                fetch(musicLink).then(function (response) {
+                    return response.text();
+                }).then(function (html) {
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(html, 'text/html');
+                    var data = doc.querySelectorAll('td');
+                    console.log(data);
+                }).catch(function (err) {
+                    console.warn('Something went wrong.', err);
+                });
+
+            } // scrapeData()
+
+            // Clear Used Years on first time playing
+            clearUsedYears();
+            getYear();
+            scrapeData();
+
+
+        </script>
+    </body>
+</html>
