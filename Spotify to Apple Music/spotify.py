@@ -3,7 +3,7 @@ import spotipy # Used to access the Spotify API
 from spotipy.oauth2 import SpotifyOAuth # Used for Spotify user authentication
 
 # Global Variables
-scope = 'playlist-read-private playlist-modify-public'
+scope = 'playlist-read-private playlist-modify-public user-top-read'
 cid = config.clientID
 secret = config.secretKey
 redirect_uri = 'http://localhost:8000'
@@ -48,6 +48,13 @@ def getUserPlaylists():
 # Create a playlist on the user's account with the parameter name
 def createPlaylist(n):
     sp.user_playlist_create(username, n)
+
+def getTopArtists():
+    offset = 0
+    global topArtists
+    while True:
+        results = sp.current_user_top_artists(offset=offset)
+
     
 getUserPlaylists()
 # Print the name and track count of each user-created playlist
